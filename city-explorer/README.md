@@ -68,3 +68,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+Name of feature: we used API 
+
+Estimate of time needed to complete: 3hours
+
+Start time: 3
+
+Finish time: 6
+
+Actual time needed to complete: 2 and a half hours

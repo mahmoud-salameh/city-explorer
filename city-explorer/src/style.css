@@ -1,0 +1,23 @@
+body{
+    width: 960px;
+    margin: auto;
+    text-align: center;
+    background-color: #064420;
+}
+.Title{
+    text-align: center;
+    color:#064420;
+    background-color: #faf1e6;
+}
+.Form{
+    text-align: center;
+    color: #064420;
+    background-color: #064420;
+    font-style:italic;
+
+}
+
+.copy {
+    color: #faf1e6;
+    margin-top: 540px;
+}

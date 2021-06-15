@@ -8,7 +8,9 @@ export class Weather extends Component {
         return this.props.data.map((element)=>{
             return  (
                 <div className='weather' key={element.date}>
-                    {element.date} => {element.desc}
+                    {element.date} 
+                    <br></br>
+                     {element.desc}
                 </div>
             )
         })

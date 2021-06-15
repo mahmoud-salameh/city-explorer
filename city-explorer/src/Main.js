@@ -17,6 +17,8 @@ export class Main extends Component {
     super(props);
     this.state = {
       citesName: '',
+      lat: '',
+      lon: '',
       citesInformation: {},
       displayData: false,
       alert: false,
@@ -35,14 +37,22 @@ export class Main extends Component {
     event.preventDefault();
     try {
 
-      const axiosResponse = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.ca5effb8d48edb0ee35fbc92c2daf295&city=${this.state.citesName}&format=json`);
-      const weatherData = await axios.get(`${weatherAPi}/weather`);
-      // console.log(weatherData)
-      this.setState({
-        citesInformation: axiosResponse.data[0],
-        displayData: true,
-        alert: false,
-        data: weatherData.data
+      const axiosResponse = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.ca5effb8d48edb0ee35fbc92c2daf295&city=${this.state.citesName}&format=json`)
+      .then(locationResponce => {
+        this.setState({
+          citesInformation: axiosResponse.data[0],
+          lat: locationResponce.data[0],
+          lon: locationResponce.data[0],
+          displayData: true,
+          alert: false
+      })
+      axios.get(`${weatherAPi}/Weather?lat=${this.state.lat}&lon=${this.state.lon}`).then(WeatherResponse =>{
+        this.setState({
+          data: WeatherResponse,
+          displayData: true
+        })
+      
+      })
       })
     } catch (error) {
       this.setState({

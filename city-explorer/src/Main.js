@@ -7,9 +7,12 @@ import CityData from './Components/CityData';
 import SearchForm from './Components/SearchForm';
 import Weather from './Components/Weather';
 import Container from 'react-bootstrap/Container';
+import Movies from './Components/Movies';
+
 // require('dotenv').config();
 
 const weatherAPi = process.env.REACT_APP_WEATHER_API
+const movieAPi = process.env.REACT_APP_WEATHER_API
 
 export class Main extends Component {
 
@@ -23,7 +26,9 @@ export class Main extends Component {
       displayData: false,
       alert: false,
       error: '',
-      data: []
+      movieDatas: [],
+      weatherData: [],
+      moviesData:''
     }
   }
 
@@ -37,23 +42,46 @@ export class Main extends Component {
     event.preventDefault();
     try {
 
-      const axiosResponse = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.ca5effb8d48edb0ee35fbc92c2daf295&city=${this.state.citesName}&format=json`)
+       await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.ca5effb8d48edb0ee35fbc92c2daf295&city=${this.state.citesName}&format=json`)
       .then(locationResponce => {
+      
         this.setState({
-          citesInformation: axiosResponse.data[0],
-          lat: locationResponce.data[0],
-          lon: locationResponce.data[0],
+          citesInformation: locationResponce.data[0],
+          lat: locationResponce.data[0].lat,
+          lon: locationResponce.data[0].lon,
+        
+      })
+      // console.log(1)
+      this.weatherData(locationResponce.data[0].lat, locationResponce.data[0].lon)
+      this.movieData(this.state.citesName)
+      })
+      
+    } catch (error) {
+      this.setState({
+        error: error.message,
+        alert: true
+      })
+    }
+    
+   
+  }
+
+
+  
+  weatherData = async (lat, lon) => {
+    try {
+
+    //  console.log(2)
+      axios.get(`${weatherAPi}/Weather?lat=${lat}&lon=${lon}`).then(WeatherResponse =>{
+        // console.log(WeatherResponse.data)
+        this.setState({
+          weatherData: WeatherResponse.data,
           displayData: true,
           alert: false
-      })
-      axios.get(`${weatherAPi}/Weather?lat=${this.state.lat}&lon=${this.state.lon}`).then(WeatherResponse =>{
-        this.setState({
-          data: WeatherResponse,
-          displayData: true
         })
       
       })
-      })
+
     } catch (error) {
       this.setState({
         error: error.message,
@@ -62,7 +90,27 @@ export class Main extends Component {
     }
   }
 
+  
+  movieData = async (moviesData) => {
+    try {
+      console.log(moviesData)
+      axios.get(`${movieAPi}/movies?city=${moviesData}`).then(movieResponse =>{
+        console.log(movieResponse.data)
+        this.setState({
+          movieDatas: movieResponse.data,
+          displayData: true,
+          alert: false
+        })
+      
+      })
 
+    } catch (error) {
+      this.setState({
+        error: error.message,
+        alert: true
+      })
+    }
+  }
 
 
 
@@ -86,7 +134,9 @@ export class Main extends Component {
               <CityData
                 citesInformation={this.state.citesInformation}
               />
-              <Weather data={this.state.data} />
+              <Weather data={this.state.weatherData} />
+
+              <Movies data={this.state.movieDatas} />
             </>
           }
 

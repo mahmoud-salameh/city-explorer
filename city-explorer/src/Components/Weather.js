@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-
+import WeatherDay from './WeatherDay'
 
 export class Weather extends Component {
 
@@ -9,14 +9,15 @@ export class Weather extends Component {
         return (
             <>
                 {
-
-                    this.props.data.map((element) => {
+                    
+                    this.props.data.map((element, index) => {
                         return (
-                            <div className='weather' key={element.date}>
-                                {element.date}
-                                <br></br>
-                                {element.desc}
-                            </div>
+                          <WeatherDay 
+                          key = {index.toString()}
+                          date = {element.date}
+                          desc = {element.desc}
+
+                          />
                         )
                     })
                 }

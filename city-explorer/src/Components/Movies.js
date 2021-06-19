@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import Movie from './Movie'
 
-import Image from 'react-bootstrap/Image'
 
 export class Movies extends Component {
 
@@ -10,27 +10,24 @@ export class Movies extends Component {
             <>
                 {
 
-                    this.props.data.map((value) => {
+                    this.props.data.map((value, index) => {
                         return (
-                            <div className='Movies' key={value.date}> 
-                             <br></br>
-                             <br></br>
-                               <Image variant="top" src={value.image_url}/>
-                               <br></br>
-                                <br></br>
-                               {value.title}
-                                <br></br>
-                                <br></br>
-                                {value.overview}
-                                <br></br>
-                                {value.average_votes}
-                                <br></br>
-                                {value.totalVotes}
-                                <br></br>
-                                {value.popularity}
-                                <br></br>
-                                {value.released_on}
-                            </div>
+                           
+                             <Movie
+                              key={index.toString()}
+                              image_url ={value.image_url}
+                              title ={value.title}
+                              overview ={value.overview}
+                              average_votes ={value.average_votes}
+                              totalVotes ={value.totalVotes}
+                              popularity ={value.popularity}
+                              released_on ={value.released_on}
+
+                              
+                              
+                              
+                              />
+                           
                         )
                     })
                 }
